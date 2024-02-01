@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block title %}
+        <title>My portfolio</title>
+    {% endblock title %}
+</head>
+<body>
+    {% block content %}
+        <nav class="navbar navbar-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">My portfolio</a>
+                </li>
+                <li class="nav-item">
+                    {% if current_user.is_authenticated %}
+                        <a class="nav-link" href="{{ url_for('add_project') }}">Add project</a>
+                    {% endif %}
+                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                    <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                    <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown
+                  </a>
+                  <ul class="dropdown-menu">
+                      {% if current_user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{{ url_for('add_project') }}">Add project</a></li>
+                      {% endif %}
+                    <li><a class="dropdown-item" href="{{ url_for('about') }}">About</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ url_for('contact') }}">Contact</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('login') }}">Login</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <hr>
+        <h1>All my projects</h1>
+
+
+        <div id="carouselExampleCaptions" class="carousel slide" style="margin-left:10px;">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                   {% for project in projects %}
+                        <div class="carousel-item active">
+                            <img src="{{ url_for('static', filename='img/todo_list.png') }}" class="d-block w-100" alt="to do list image">
+                                  <div class="carousel-caption d-none d-md-block">
+                                    <h5 style="color:black;">{{ project.title}}</h5>
+                                    <p style="color: black;">{{ project.content }}</p>
+                                  </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ url_for('static', filename='img/real_estate_website.png') }}" class="d-block w-100" alt="real estate website image">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 style="color:black;">{{ project.title }}</h5>
+                                    <p style="color:black;">{{ project.content }}</p>
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+        </div>
+        <hr>
+        <div class="container">
+              <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+                    <p class="col-md-4 mb-0 text-body-secondary">&copy; 2023 Clement Cathala </p>
+
+                    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+                    </a>
+
+                    <ul class="nav col-md-4 justify-content-end">
+                          <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link px-2 text-body-secondary">Home</a></li>
+                          {% if current_user.is_authenticated %}
+                            <li class="nav-item"><a href="{{ url_for('add_project') }}" class="nav-link px-2 text-body-secondary">Add project</a></li>
+                        {% endif %}
+                          <li class="nav-item"><a href="{{ url_for('contact') }}" class="nav-link px-2 text-body-secondary">Contact</a></li>
+                          <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link px-2 text-body-secondary">Login</a></li>
+                          <li class="nav-item"><a href="{{ url_for('about') }}" class="nav-link px-2 text-body-secondary">About</a></li>
+                    </ul>
+              </footer>
+        </div>
+
+    {% endblock content %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+   </body>
+</html>

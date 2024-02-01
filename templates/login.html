@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block content %}
+    <div class="container">
+        <a href="{{ url_for('index') }}"><h1 style="margin-left: 10px; font-weight: bold;">Login</h1></a>
+        <hr>
+        <form class="form-control" method="POST">
+            {{ render_form(form) }}
+        </form>
+        <br>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger" style="margin-left: 10px;">Log out</a><br>
+        <a href="{{ url_for('signup') }}" style="margin-left:10px; margin-top: 10px;" class="btn btn-primary">Don't have an account? Sign Up</a>
+
+    </div>
+{% endblock content %}
+```

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block content %}
+    <div class="container">
+        <a href="{{ url_for('index') }}"><h1 style="margin-left: 10px; font-weight: bold;">Contact</h1></a>
+        <hr>
+        <form class="form-control" method="POST">
+            {{ render_form(form) }}
+        </form>
+    </div>
+{% endblock content %}
